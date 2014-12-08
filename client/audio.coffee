@@ -54,7 +54,7 @@ connectRecorder = (stream) ->
   input.connect recorder
   recorder.connect audioContext.destination
 
-@common.init = ->
+Meteor.startup ->
   navigator.getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia or navigator.msGetUserMedia unless navigator.getUserMedia
   window.AudioContext = window.webkitAudioContext unless window.AudioContext
 
