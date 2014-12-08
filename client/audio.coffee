@@ -2,36 +2,6 @@ audioContext = null
 canvas = null
 canvasContext = null
 
-copyBuffers = (buffers, dest) ->
-  offset = 0
-  for buffer in buffers
-    dest.set buffer, offset
-    offset += buffer.length
-
-  dest
-
-connectRecorder = (stream) ->
-  audioContext = new AudioContext()
-
-  hzElement = document.getElementById("hz")
-  noteElement = document.getElementById("note")
-
-  bufferSize = 2048
-  recorder = audioContext.createScriptProcessor(bufferSize, 2, 2)
-  recorder.onaudioprocess = (e) ->
-    left = e.inputBuffer.getChannelData(0)
-    drawWave(left)
-    hz = Pitcher.pitch(left, audioContext.sampleRate)
-    return unless hz >= 30
-    note = new Note(hz)
-    hzElement.innerHTML = 'hz = ' + hz
-    noteElement.innerHTML = 'note = ' + note.name()
-
-  # connect the recorder
-  input = audioContext.createMediaStreamSource(stream)
-  input.connect recorder
-  recorder.connect audioContext.destination
-
 setPixel = (imageData, x, y, color) ->
   width = imageData.width
   data = imageData.data
@@ -61,6 +31,28 @@ drawWave = (buffer) ->
     setPixel imageData, x, y, color
 
   canvasContext.putImageData imageData, 0, 0
+
+connectRecorder = (stream) ->
+  audioContext = new AudioContext()
+
+  hzElement = document.getElementById("hz")
+  noteElement = document.getElementById("note")
+
+  bufferSize = 2048
+  recorder = audioContext.createScriptProcessor(bufferSize, 2, 2)
+  recorder.onaudioprocess = (e) ->
+    left = e.inputBuffer.getChannelData(0)
+    drawWave(left)
+    hz = Pitcher.pitch(left, audioContext.sampleRate)
+    return unless hz >= 30
+    note = new Note(hz)
+    hzElement.innerHTML = 'hz = ' + hz
+    noteElement.innerHTML = 'note = ' + note.name()
+
+  # connect the recorder
+  input = audioContext.createMediaStreamSource(stream)
+  input.connect recorder
+  recorder.connect audioContext.destination
 
 @common.init = ->
   navigator.getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia or navigator.msGetUserMedia unless navigator.getUserMedia
