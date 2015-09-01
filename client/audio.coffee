@@ -11,7 +11,7 @@ setPixel = (imageData, x, y, color) ->
   data[index + 2] = color.b unless isNaN(color.b)
   data[index + 3] = color.a unless isNaN(color.a)
 
-drawWave = (buffer) ->
+drawWave = (buffer, note) ->
   canvasContext.save()
   canvasContext.fillStyle = "rgb(30, 30, 30)"
   canvasContext.fillRect 0, 0, canvas.width, canvas.height
@@ -23,12 +23,23 @@ drawWave = (buffer) ->
     b: 200
     a: 255
 
+  red =
+    r: 200
+    g: 0
+    b: 0
+    a: 255
+
   width = imageData.width
   height = imageData.height
 
   for x in [0...width]
     y = Math.floor(height/2+buffer[x*2]*height)
     setPixel imageData, x, y, color
+
+  x = Math.round(width/2 + width * note.diff())
+  for y in [0...height]
+    setPixel imageData, x, y, color
+    setPixel imageData, width/2, y, red
 
   canvasContext.putImageData imageData, 0, 0
 
@@ -42,10 +53,10 @@ connectRecorder = (stream) ->
   recorder = audioContext.createScriptProcessor(bufferSize, 2, 2)
   recorder.onaudioprocess = (e) ->
     left = e.inputBuffer.getChannelData(0)
-    drawWave(left)
     hz = Pitcher.pitch(left, audioContext.sampleRate)
-    return unless hz >= 30
     note = new Note(hz)
+    drawWave(left, note)
+    return unless hz >= 30
     hzElement.innerHTML = 'hz = ' + hz
     noteElement.innerHTML = 'note = ' + note.name()
 
