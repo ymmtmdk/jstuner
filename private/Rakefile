@@ -1,0 +1,5 @@
+task :default do
+  sh 'jade --pretty ../client/jstuner.jade --out ../public/purejs/index.html'
+  sh 'coffee -o ../public/purejs -c ../client/audio.coffee'
+  # sh 'cp ../client/*.js .'
+end
