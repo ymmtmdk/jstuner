@@ -10,7 +10,6 @@ mquandalle:jade
 jquery
 mizzao:bootstrap-3
 less
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -23,3 +22,5 @@ random
 ejson
 spacebars
 check
+standard-minifier-css
+standard-minifier-js
