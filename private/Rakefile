@@ -1,5 +1,5 @@
 task :default do
-  # sh 'jade --pretty ../client/index.jade --out ../public/purejs'
+  sh 'jade --pretty ../client/index.jade --out ../public/purejs'
   sh 'coffee -o ../public/purejs -c ../client/audio.coffee'
-  # sh 'cp ../client/*.js .'
+  sh 'cp ../public/*.js ../public/purejs'
 end

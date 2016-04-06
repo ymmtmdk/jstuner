@@ -66,6 +66,7 @@ connectRecorder = (stream) ->
   recorder.connect audioContext.destination
 
 main = ->
+  console.log 2
   navigator.getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia or navigator.msGetUserMedia unless navigator.getUserMedia
   window.AudioContext = window.webkitAudioContext unless window.AudioContext
 
