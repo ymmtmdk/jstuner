@@ -65,13 +65,7 @@ connectRecorder = (stream) ->
   input.connect recorder
   recorder.connect audioContext.destination
 
-# window.onload = ->
-Meteor.startup = ->
-  if Meteor?
-    console.log 3
-  else
-    console.log 2
-
+main = ->
   navigator.getUserMedia = navigator.getUserMedia or navigator.webkitGetUserMedia or navigator.mozGetUserMedia or navigator.msGetUserMedia unless navigator.getUserMedia
   window.AudioContext = window.webkitAudioContext unless window.AudioContext
 
@@ -85,3 +79,8 @@ Meteor.startup = ->
 
   canvas = document.getElementById("wave")
   canvasContext = canvas.getContext("2d")
+
+if Meteor?
+  Meteor.startup(main)
+else
+  window.onload = main
