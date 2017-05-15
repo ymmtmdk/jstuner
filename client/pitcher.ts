@@ -92,15 +92,9 @@ class Pitcher{
     if (max < 0.35) return -1.0;
     const coff = DEFAULT_CUTOFF * max;
 
-    let idx = -1;
-    for (let i = 0; i < amps.length; i++){
-      if (amps[i] > coff){
-        idx = i;
-        break;
-      }
-    }
+    const idx = amps.find((e)=> e > coff);
 
-    if (idx == -1) return -1.0;
+    if (idx === undefined) return -1.0;
 
     return sampleRate / periods[idx];
   }
