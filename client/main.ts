@@ -1,12 +1,12 @@
-const Note = require('./note.js');
-const Pitcher = require('./pitcher.js');
+import Note from './note';
+import Pitcher from './pitcher.js';
 
 let audioContext, canvas, canvasContext;
 audioContext = null;
 canvas = null;
 canvasContext = null;
 
-function setPixel(imageData, x, y, color) {
+function setPixel(imageData, x: number, y, color) {
   const width = imageData.width;
   const data = imageData.data;
   const index = ((width * y) + x) * 4;
@@ -76,20 +76,23 @@ function connectRecorder(stream) {
     hzElement.innerHTML = 'hz = ' + hz;
     noteElement.innerHTML = 'note = ' + note.name();
   };
-  input = audioContext.createMediaStreamSource(stream);
+  const input = audioContext.createMediaStreamSource(stream);
   input.connect(recorder);
   return recorder.connect(audioContext.destination);
 };
 
 window.onload = (function() {
-  if (!navigator.getUserMedia) {
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+  const nav: any = navigator;
+  const win: any = window;
+
+  if (!nav.getUserMedia) {
+    nav.getUserMedia = nav.getUserMedia || nav.webkitGetUserMedia || nav.mozGetUserMedia || nav.msGetUserMedia;
   }
-  if (!window.AudioContext) {
-    window.AudioContext = window.webkitAudioContext;
+  if (!win.AudioContext) {
+    win.AudioContext = win.webkitAudioContext;
   }
-  if (navigator.getUserMedia && window.AudioContext) {
-    navigator.getUserMedia({
+  if (nav.getUserMedia && win.AudioContext) {
+    nav.getUserMedia({
       audio: true
     }, connectRecorder, function() {
       return alert("error capturing audio.");

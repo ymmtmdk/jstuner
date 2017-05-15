@@ -1,5 +1,8 @@
 class Note{
-  constructor(hz){
+  readonly hz: number;
+  readonly base: number;
+  readonly note: number;
+  constructor(hz: number){
     this.hz = hz;
     this.base = 55;
     this.note = Math.log(this.hz / this.base) / Math.log(2) * 12;
@@ -18,5 +21,5 @@ class Note{
   }
 }
 
-module.exports = Note;
+export default Note;
 
