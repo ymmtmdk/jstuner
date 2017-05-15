@@ -1,7 +1,7 @@
 import Complex from './complex';
 
 class Pitcher{
-  static parabola(nsdf: Array<number>, i:number){
+  private static parabola(nsdf: Array<number>, i:number){
     var a:number = nsdf[i-1];
     var b:number = nsdf[i];
     var c:number = nsdf[i+1];
@@ -19,7 +19,7 @@ class Pitcher{
     return {x:x, y:y};
   }
 
-  static acf(x: Array<Complex>){
+  private static acf(x: Array<Complex>){
     var n = x.length;
     var tmp = new Array<Complex>();
     for (let i = 0; i < n; i++){tmp[i] = x[i];}
@@ -34,7 +34,7 @@ class Pitcher{
     return out;
   }
 
-  static nsdf(x: Array<Complex>){
+  private static nsdf(x: Array<Complex>){
     function sq(n:number){ return n*n;}
 
     var n = x.length;
@@ -47,7 +47,7 @@ class Pitcher{
     return out;
   }
 
-  static picking(nsdf: Array<number>){
+  private static picking(nsdf: Array<number>){
     var maxI = 0;
     var nega = false;
     var peaks = new Array<number>();
@@ -67,13 +67,13 @@ class Pitcher{
     return peaks;
   }
 
-  public static pitch(ary: Array<number>, sampleRate: number){
+  static pitch(ary: Array<number>, sampleRate: number){
     var DEFAULT_CUTOFF = 0.95;
 
     var x = new Array<Complex>();
     for (let i = 0; i < ary.length; i++) x[i] = new Complex(ary[i], 0);
 
-    var nsdf = nsdf(x);
+    var nsdf = this.nsdf(x);
 
     var peaks = this.picking(nsdf);
     if (peaks.length == 0) return -1.0;
