@@ -6,7 +6,7 @@ audioContext = null;
 canvas = null;
 canvasContext = null;
 
-function setPixel(imageData, x: number, y, color) {
+function setPixel(imageData, x: number, y: number, color) {
   const width = imageData.width;
   const data = imageData.data;
   const index = ((width * y) + x) * 4;
@@ -24,7 +24,7 @@ function setPixel(imageData, x: number, y, color) {
   }
 };
 
-function drawWave(buffer, note) {
+function drawWave(buffer, note: Note) {
   let x, y;
   canvasContext.save();
   canvasContext.fillStyle = "rgb(30, 30, 30)";
@@ -81,7 +81,7 @@ function connectRecorder(stream) {
   return recorder.connect(audioContext.destination);
 };
 
-window.onload = (function() {
+window.onload = () => {
   const nav: any = navigator;
   const win: any = window;
 
@@ -91,17 +91,16 @@ window.onload = (function() {
   if (!win.AudioContext) {
     win.AudioContext = win.webkitAudioContext;
   }
-  if (nav.getUserMedia && win.AudioContext) {
-    nav.getUserMedia({
-      audio: true
-    }, connectRecorder, function() {
-      return alert("error capturing audio.");
-    });
-  } else {
+  if (!nav.getUserMedia || !win.AudioContext) {
     alert("not supported in this browser.");
     return;
   }
+
+  nav.getUserMedia(
+    { audio: true },
+    connectRecorder, ()=> {alert("error capturing audio.");}
+  );
   canvas = document.getElementById("wave");
   canvasContext = canvas.getContext("2d");
-});
+};
 
