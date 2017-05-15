@@ -68,18 +68,18 @@ class Pitcher{
   }
 
   static pitch(ary: Array<number>, sampleRate: number){
-    var DEFAULT_CUTOFF = 0.95;
+    const DEFAULT_CUTOFF = 0.95;
 
-    var x = new Array<Complex>();
+    const x = new Array<Complex>();
     for (let i = 0; i < ary.length; i++) x[i] = new Complex(ary[i], 0);
 
-    var nsdf = this.nsdf(x);
+    const nsdf = this.nsdf(x);
 
-    var peaks = this.picking(nsdf);
+    const peaks = this.picking(nsdf);
     if (peaks.length == 0) return -1.0;
 
-    var periods = new Array<number>();
-    var amps = new Array<number>();
+    const periods = new Array<number>();
+    const amps = new Array<number>();
 
     for (let i = 0; i < peaks.length; i++){
       var h = this.parabola(nsdf, peaks[i]);
@@ -87,12 +87,12 @@ class Pitcher{
       periods.push(h.x);
     }
 
-    var max = Lambda.fold(amps, function(e, max){return e > max ? e : max;}, 0.0);
+    const max = amps.reduce((a,b)=> Math.max(a, b));
 
     if (max < 0.35) return -1.0;
-    var coff = DEFAULT_CUTOFF * max;
+    const coff = DEFAULT_CUTOFF * max;
 
-    var idx = -1;
+    let idx = -1;
     for (let i = 0; i < amps.length; i++){
       if (amps[i] > coff){
         idx = i;
