@@ -87,14 +87,20 @@ class Pitcher{
       periods.push(h.x);
     }
 
-    const max = amps.reduce((a,b)=> Math.max(a, b));
+    const max = Lambda.fold(amps, function(e, max){return e > max ? e : max;}, 0.0);
 
     if (max < 0.35) return -1.0;
     const coff = DEFAULT_CUTOFF * max;
 
-    const idx = amps.find((e)=> e > coff);
+    let idx = -1;
+    for (let i = 0; i < amps.length; i++){
+      if (amps[i] > coff){
+        idx = i;
+        break;
+      }
+    }
 
-    if (idx === undefined) return -1.0;
+    if (idx == -1) return -1.0;
 
     return sampleRate / periods[idx];
   }
