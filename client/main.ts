@@ -73,8 +73,8 @@ function connectRecorder(stream) {
     if (!(hz >= 30)) {
       return;
     }
-    hzElement.innerHTML = 'hz = ' + hz;
-    noteElement.innerHTML = 'note = ' + note.name();
+    if (hzElement !== null) hzElement.innerHTML = 'hz = ' + hz;
+    if (noteElement !== null) noteElement.innerHTML = 'note = ' + note.name();
   };
   const input = audioContext.createMediaStreamSource(stream);
   input.connect(recorder);
