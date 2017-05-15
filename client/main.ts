@@ -64,12 +64,10 @@ function connectRecorder(stream) {
   const hzElement = document.getElementById("hz");
   const noteElement = document.getElementById("note");
   const bufferSize = 2048;
-  const pitcher = new Pitcher();
   const recorder = audioContext.createScriptProcessor(bufferSize, 2, 2);
   recorder.onaudioprocess = function(e) {
     const left = e.inputBuffer.getChannelData(0);
-
-    const hz = pitcher.pitch(left, audioContext.sampleRate);
+    const hz = Pitcher.pitch(left, audioContext.sampleRate);
     const note = new Note(hz);
     drawWave(left, note);
     if (!(hz >= 30)) {
