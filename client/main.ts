@@ -1,5 +1,5 @@
 import Note from './note';
-import Pitcher from './pitcher.js';
+import Pitcher from './pitcher';
 
 let audioContext, canvas, canvasContext;
 audioContext = null;
@@ -64,10 +64,12 @@ function connectRecorder(stream) {
   const hzElement = document.getElementById("hz");
   const noteElement = document.getElementById("note");
   const bufferSize = 2048;
+  const pitcher = new Pitcher();
   const recorder = audioContext.createScriptProcessor(bufferSize, 2, 2);
   recorder.onaudioprocess = function(e) {
     const left = e.inputBuffer.getChannelData(0);
-    const hz = Pitcher.pitch(left, audioContext.sampleRate);
+
+    const hz = pitcher.pitch(left, audioContext.sampleRate);
     const note = new Note(hz);
     drawWave(left, note);
     if (!(hz >= 30)) {
