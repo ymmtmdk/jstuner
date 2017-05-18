@@ -8,7 +8,7 @@ class Pitcher{
 
     const bottom = a + c - 2.0 * b;
     let x:number, y:number;
-    if (bottom == 0.0){
+    if (bottom === 0.0){
       x = i;
       y = b;
     }else{
@@ -53,7 +53,7 @@ class Pitcher{
     const peaks = new Array<number>();
     for (let i = 0; i < nsdf.length-1; i++){
       if (nsdf[i] > 0.0){
-        if (nega && (maxI==0 || nsdf[i]>nsdf[maxI])) maxI = i;
+        if (nega && (maxI===0 || nsdf[i]>nsdf[maxI])) maxI = i;
       }else{
         if (maxI>0){
           peaks.push(maxI);
@@ -70,7 +70,6 @@ class Pitcher{
   static pitch(ary: Array<number>, sampleRate: number){
     const DEFAULT_CUTOFF = 0.95;
 
-    // const x2: Array<Complex> = ary.map((e)=>{return new Complex(e, 0)});
     const x = new Array<Complex>();
     for (let i = 0; i < ary.length; i++) x[i] = new Complex(ary[i], 0);
 
@@ -91,9 +90,8 @@ class Pitcher{
     const max = amps.reduce((a,b)=>Math.max(a,b));
 
     if (max < 0.35) return -1.0;
-    const coff = DEFAULT_CUTOFF * max;
 
-    let idx = amps.findIndex(e=> e > coff);
+    let idx = amps.findIndex(e=> e > DEFAULT_CUTOFF * max);
     if (idx === -1) return -1.0;
 
     return sampleRate / periods[idx];
@@ -101,10 +99,10 @@ class Pitcher{
 }
 
 class FFT{
-  private static fft_inner = function(n: number,s: number,copy_flag: boolean,x: Array<Complex>,y: Array<Complex>) {
-    if(n == 1) {
+  private static fft_inner = function(n: number,stride: number,copy_flag: boolean,x: Array<Complex>,y: Array<Complex>) {
+    if(n === 1) {
       if(copy_flag) {
-        for (let q = 0; q < s; q++){ y[q] = x[q]; }
+        for (let q = 0; q < stride; q++){ y[q] = x[q]; }
       }
       return;
     }
@@ -113,18 +111,18 @@ class FFT{
     const theta = 2.0 * Math.PI / n;
     for (let p = 0; p < m; p++){
       const wp = new Complex(Math.cos(p * theta),-Math.sin(p * theta));
-      for (let q = 0; q < s; q++){
-        const a = x[q + s * p];
-        const b = x[q + s * (p + m)];
-        y[q + s * (2 * p)] = a.plus(b);
-        y[q + s * (2 * p + 1)] = a.minus_bang(b).multi(wp);
+      for (let q = 0; q < stride; q++){
+        const a = x[q + stride * p];
+        const b = x[q + stride * (p + m)];
+        y[q + stride * (2 * p)] = a.plus(b);
+        y[q + stride * (2 * p + 1)] = a.minus_bang(b).multi(wp);
       }
     }
-    FFT.fft_inner(n / 2, 2 * s, !copy_flag, y, x);
+    FFT.fft_inner(n / 2, 2 * stride, !copy_flag, y, x);
   }
 
-  static fft = function(x,n) {
-    FFT.fft_inner(n,1,false,x,new Array());
+  static fft = function(x: Array<Complex>, n: number) {
+    FFT.fft_inner(n, 1, false, x, new Array<Complex>());
   }
 }
 
