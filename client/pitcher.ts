@@ -81,17 +81,17 @@ class Pitcher{
     const periods = new Array<number>();
     const amps = new Array<number>();
 
+    let maxAmp = 0;
     for (let i = 0; i < peakIndexes.length; i++){
       const h = this.parabola(nsdf, peakIndexes[i]);
+      maxAmp = Math.max(maxAmp, h.y);
       amps.push(h.y);
       periods.push(h.x);
     }
 
-    const max = amps.reduce((a,b)=>Math.max(a,b));
+    if (maxAmp < 0.35) return -1.0;
 
-    if (max < 0.35) return -1.0;
-
-    let idx = amps.findIndex(e=> e > DEFAULT_CUTOFF * max);
+    let idx = amps.findIndex(e=> e > DEFAULT_CUTOFF * maxAmp);
     if (idx === -1) return -1.0;
 
     return sampleRate / periods[idx];
