@@ -35,14 +35,12 @@ class Pitcher{
   }
 
   private static nsdf(x: Array<Complex>){
-    function sq(n:number){ return n*n;}
-
     const n = x.length;
     const out = this.acf(x);
     let tsq = out[0]*2.0;
     for (let i = 0; i < n; i++){
       out[i] = tsq>0.0 ? out[i]/tsq : 0.0;
-      tsq -= sq(x[n-1-i].real) + sq(x[i].real);
+      tsq -= Math.pow(x[n-1-i].real, 2) + Math.pow(x[i].real, 2);
     }
     return out;
   }
@@ -99,7 +97,7 @@ class Pitcher{
 }
 
 class FFT{
-  private static fft_inner = function(n: number,stride: number,copy_flag: boolean,x: Array<Complex>,y: Array<Complex>) {
+  private static fft_inner(n: number,stride: number,copy_flag: boolean,x: Array<Complex>,y: Array<Complex>) {
     if(n === 1) {
       if(copy_flag) {
         for (let q = 0; q < stride; q++){ y[q] = x[q]; }
@@ -121,7 +119,7 @@ class FFT{
     FFT.fft_inner(n / 2, 2 * stride, !copy_flag, y, x);
   }
 
-  static fft = function(x: Array<Complex>, n: number) {
+  static fft(x: Array<Complex>, n: number) {
     FFT.fft_inner(n, 1, false, x, new Array<Complex>());
   }
 }
