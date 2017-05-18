@@ -112,25 +112,25 @@ class FFT{
     var theta = 2.0 * Math.PI / n;
     if(n == 1) {
       if(eo) {
-	var _g = 0;
-	while(_g < s) {
-	  var q = _g++;
-	  y[q] = x[q];
-	}
+        var _g = 0;
+        while(_g < s) {
+          var q = _g++;
+          y[q] = x[q];
+        }
       }
     } else {
       var _g1 = 0;
       while(_g1 < m) {
-	var p = _g1++;
-	var wp = new Complex(Math.cos(p * theta),-Math.sin(p * theta));
-	var _g11 = 0;
-	while(_g11 < s) {
-	  var q1 = _g11++;
-	  var a = x[q1 + s * p];
-	  var b = x[q1 + s * (p + m)];
-	  y[q1 + s * (2 * p)] = a.plus(b);
-	  y[q1 + s * (2 * p + 1)] = a.minus_bang(b).multi(wp);
-	}
+        var p = _g1++;
+        var wp = new Complex(Math.cos(p * theta),-Math.sin(p * theta));
+        var _g11 = 0;
+        while(_g11 < s) {
+          var q1 = _g11++;
+          var a = x[q1 + s * p];
+          var b = x[q1 + s * (p + m)];
+          y[q1 + s * (2 * p)] = a.plus(b);
+          y[q1 + s * (2 * p + 1)] = a.minus_bang(b).multi(wp);
+        }
       }
       FFT.fft_(n / 2,2 * s,!eo,y,x);
     }
