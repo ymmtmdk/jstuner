@@ -107,31 +107,30 @@ class Pitcher{
 }
 
 class FFT{
-  static fft_ = function(n,s,eo,x,y) {
+  private static fft_inner = function(n: number,s: number,copy_flag: boolean,x: Array<Complex>,y: Array<Complex>) {
+    if(n == 1) {
+      if(copy_flag) {
+        for (let q = 0; q < s; q++){ y[q] = x[q]; }
+      }
+      return;
+    }
+
     const m = Math.floor(n / 2);
     const theta = 2.0 * Math.PI / n;
-    if(n == 1) {
-      if(eo) {
-        for (let q = 0; q < s; q++){
-          y[q] = x[q];
-        }
+    for (let p = 0; p < m; p++){
+      const wp = new Complex(Math.cos(p * theta),-Math.sin(p * theta));
+      for (let q = 0; q < s; q++){
+        const a = x[q + s * p];
+        const b = x[q + s * (p + m)];
+        y[q + s * (2 * p)] = a.plus(b);
+        y[q + s * (2 * p + 1)] = a.minus_bang(b).multi(wp);
       }
-    } else {
-      for (let p = 0; p < m; p++){
-        var wp = new Complex(Math.cos(p * theta),-Math.sin(p * theta));
-        for (let q = 0; q < s; q++){
-          var a = x[q + s * p];
-          var b = x[q + s * (p + m)];
-          y[q + s * (2 * p)] = a.plus(b);
-          y[q + s * (2 * p + 1)] = a.minus_bang(b).multi(wp);
-        }
-      }
-      FFT.fft_(n / 2,2 * s,!eo,y,x);
     }
+    FFT.fft_inner(n / 2, 2 * s, !copy_flag, y, x);
   }
 
   static fft = function(x,n) {
-    FFT.fft_(n,1,false,x,new Array());
+    FFT.fft_inner(n,1,false,x,new Array());
   }
 }
 
