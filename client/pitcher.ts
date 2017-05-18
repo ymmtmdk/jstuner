@@ -2,17 +2,17 @@ import Complex from './complex';
 
 class Pitcher{
   private static parabola(nsdf: Array<number>, i:number){
-    const a:number = nsdf[i-1];
-    const b:number = nsdf[i];
-    const c:number = nsdf[i+1];
+    const a = nsdf[i-1];
+    const b = nsdf[i];
+    const c = nsdf[i+1];
 
-    const bottom:number = a + c - 2.0 * b;
-    var x:number, y:number;
+    const bottom = a + c - 2.0 * b;
+    let x:number, y:number;
     if (bottom == 0.0){
       x = i;
       y = b;
     }else{
-      var delta = a - c;
+      const delta = a - c;
       x = i + delta / (2.0 * bottom);
       y = b - delta * delta / (8.0 * bottom);
     }
@@ -38,8 +38,8 @@ class Pitcher{
     function sq(n:number){ return n*n;}
 
     const n = x.length;
-    var out = this.acf(x);
-    var tsq = out[0]*2.0;
+    const out = this.acf(x);
+    let tsq = out[0]*2.0;
     for (let i = 0; i < n; i++){
       out[i] = tsq>0.0 ? out[i]/tsq : 0.0;
       tsq -= sq(x[n-1-i].real) + sq(x[i].real);
@@ -47,10 +47,10 @@ class Pitcher{
     return out;
   }
 
-  private static picking(nsdf: Array<number>){
-    var maxI = 0;
-    var nega = false;
-    var peaks = new Array<number>();
+  private static peakPicking(nsdf: Array<number>){
+    let maxI = 0;
+    let nega = false;
+    const peaks = new Array<number>();
     for (let i = 0; i < nsdf.length-1; i++){
       if (nsdf[i] > 0.0){
         if (nega && (maxI==0 || nsdf[i]>nsdf[maxI])) maxI = i;
@@ -67,8 +67,7 @@ class Pitcher{
     return peaks;
   }
 
-
-  static pitch_bug(ary: Array<number>, sampleRate: number){
+  static pitch(ary: Array<number>, sampleRate: number){
     const DEFAULT_CUTOFF = 0.95;
 
     // const x2: Array<Complex> = ary.map((e)=>{return new Complex(e, 0)});
@@ -77,14 +76,14 @@ class Pitcher{
 
     const nsdf = this.nsdf(x);
 
-    const peaks = this.picking(nsdf);
+    const peaks = this.peakPicking(nsdf);
     if (peaks.length === 0) return -1.0;
 
     const periods = new Array<number>();
     const amps = new Array<number>();
 
     for (let i = 0; i < peaks.length; i++){
-      var h = this.parabola(nsdf, peaks[i]);
+      const h = this.parabola(nsdf, peaks[i]);
       amps.push(h.y);
       periods.push(h.x);
     }
@@ -94,47 +93,8 @@ class Pitcher{
     if (max < 0.35) return -1.0;
     const coff = DEFAULT_CUTOFF * max;
 
-    let idx = amps.find(e=> e > coff);-1;
-    if (idx === undefined) return -1.0;
-
-    return sampleRate / periods[idx];
-  }
-
-
-  static pitch(ary: Array<number>, sampleRate: number){
-    const DEFAULT_CUTOFF = 0.95;
-
-    const x = new Array<Complex>();
-    for (let i = 0; i < ary.length; i++) x[i] = new Complex(ary[i], 0);
-
-    const nsdf = this.nsdf(x);
-
-    const peaks = this.picking(nsdf);
-    if (peaks.length == 0) return -1.0;
-
-    const periods = new Array<number>();
-    const amps = new Array<number>();
-
-    for (let i = 0; i < peaks.length; i++){
-      var h = this.parabola(nsdf, peaks[i]);
-      amps.push(h.y);
-      periods.push(h.x);
-    }
-
-    const max = amps.reduce((a,b)=>Math.max(a,b));
-
-    if (max < 0.35) return -1.0;
-    const coff = DEFAULT_CUTOFF * max;
-
-    let idx = -1;
-    for (let i = 0; i < amps.length; i++){
-      if (amps[i] > coff){
-        idx = i;
-        break;
-      }
-    }
-
-    if (idx == -1) return -1.0;
+    let idx = amps.findIndex(e=> e > coff);
+    if (idx === -1) return -1.0;
 
     return sampleRate / periods[idx];
   }
