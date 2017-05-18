@@ -2,11 +2,11 @@ import Complex from './complex';
 
 class Pitcher{
   private static parabola(nsdf: Array<number>, i:number){
-    var a:number = nsdf[i-1];
-    var b:number = nsdf[i];
-    var c:number = nsdf[i+1];
+    const a:number = nsdf[i-1];
+    const b:number = nsdf[i];
+    const c:number = nsdf[i+1];
 
-    var bottom:number = a + c - 2.0 * b;
+    const bottom:number = a + c - 2.0 * b;
     var x:number, y:number;
     if (bottom == 0.0){
       x = i;
@@ -20,8 +20,8 @@ class Pitcher{
   }
 
   private static acf(x: Array<Complex>){
-    var n = x.length;
-    var tmp = new Array<Complex>();
+    const n = x.length;
+    const tmp = new Array<Complex>();
     for (let i = 0; i < n; i++){tmp[i] = x[i];}
     for (let i = n; i < (n*2); i++){tmp[i] = new Complex(0,0);}
 
@@ -29,7 +29,7 @@ class Pitcher{
     for (let i = 0; i < (n*2); i++){tmp[i] = tmp[i].abs2();}
 
     FFT.fft(tmp, n*2);
-    var out = new Array<number>();
+    const out = new Array<number>();
     for (let i = 0; i < n; i++){out[i] = tmp[i].real/n/2;}
     return out;
   }
@@ -37,7 +37,7 @@ class Pitcher{
   private static nsdf(x: Array<Complex>){
     function sq(n:number){ return n*n;}
 
-    var n = x.length;
+    const n = x.length;
     var out = this.acf(x);
     var tsq = out[0]*2.0;
     for (let i = 0; i < n; i++){
@@ -108,28 +108,22 @@ class Pitcher{
 
 class FFT{
   static fft_ = function(n,s,eo,x,y) {
-    var m = Math.floor(n / 2);
-    var theta = 2.0 * Math.PI / n;
+    const m = Math.floor(n / 2);
+    const theta = 2.0 * Math.PI / n;
     if(n == 1) {
       if(eo) {
-        var _g = 0;
-        while(_g < s) {
-          var q = _g++;
+        for (let q = 0; q < s; q++){
           y[q] = x[q];
         }
       }
     } else {
-      var _g1 = 0;
-      while(_g1 < m) {
-        var p = _g1++;
+      for (let p = 0; p < m; p++){
         var wp = new Complex(Math.cos(p * theta),-Math.sin(p * theta));
-        var _g11 = 0;
-        while(_g11 < s) {
-          var q1 = _g11++;
-          var a = x[q1 + s * p];
-          var b = x[q1 + s * (p + m)];
-          y[q1 + s * (2 * p)] = a.plus(b);
-          y[q1 + s * (2 * p + 1)] = a.minus_bang(b).multi(wp);
+        for (let q = 0; q < s; q++){
+          var a = x[q + s * p];
+          var b = x[q + s * (p + m)];
+          y[q + s * (2 * p)] = a.plus(b);
+          y[q + s * (2 * p + 1)] = a.minus_bang(b).multi(wp);
         }
       }
       FFT.fft_(n / 2,2 * s,!eo,y,x);
