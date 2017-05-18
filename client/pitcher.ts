@@ -67,6 +67,40 @@ class Pitcher{
     return peaks;
   }
 
+
+  static pitch_bug(ary: Array<number>, sampleRate: number){
+    const DEFAULT_CUTOFF = 0.95;
+
+    // const x2: Array<Complex> = ary.map((e)=>{return new Complex(e, 0)});
+    const x = new Array<Complex>();
+    for (let i = 0; i < ary.length; i++) x[i] = new Complex(ary[i], 0);
+
+    const nsdf = this.nsdf(x);
+
+    const peaks = this.picking(nsdf);
+    if (peaks.length === 0) return -1.0;
+
+    const periods = new Array<number>();
+    const amps = new Array<number>();
+
+    for (let i = 0; i < peaks.length; i++){
+      var h = this.parabola(nsdf, peaks[i]);
+      amps.push(h.y);
+      periods.push(h.x);
+    }
+
+    const max = amps.reduce((a,b)=>Math.max(a,b));
+
+    if (max < 0.35) return -1.0;
+    const coff = DEFAULT_CUTOFF * max;
+
+    let idx = amps.find(e=> e > coff);-1;
+    if (idx === undefined) return -1.0;
+
+    return sampleRate / periods[idx];
+  }
+
+
   static pitch(ary: Array<number>, sampleRate: number){
     const DEFAULT_CUTOFF = 0.95;
 
@@ -87,7 +121,7 @@ class Pitcher{
       periods.push(h.x);
     }
 
-    const max = Lambda.fold(amps, function(e, max){return e > max ? e : max;}, 0.0);
+    const max = amps.reduce((a,b)=>Math.max(a,b));
 
     if (max < 0.35) return -1.0;
     const coff = DEFAULT_CUTOFF * max;
@@ -133,32 +167,6 @@ class FFT{
     FFT.fft_inner(n,1,false,x,new Array());
   }
 }
-
-class HxOverrides{
-  static iter(a) {
-    return { cur : 0, arr : a, hasNext : function() {
-      return this.cur < this.arr.length;
-    }, next : function() {
-      return this.arr[this.cur++];
-    }};
-  }
-}
-
-class Lambda{
-  static fold(it,f,first) {
-    var $it0 = $iterator(it)();
-    while( $it0.hasNext() ) {
-      var x = $it0.next();
-      first = f(x,first);
-    }
-    return first;
-  }
-}
-
-function $iterator(o) { if( o instanceof Array ) return function() { return HxOverrides.iter(o); }; return typeof(o.iterator) == 'function' ? $bind(o,o.iterator) : o.iterator; }
-var $_, $fid = 0;
-
-function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
 
 export default Pitcher;
 
