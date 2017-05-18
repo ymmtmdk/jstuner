@@ -46,26 +46,25 @@ class Pitcher{
   }
 
   private static peakPicking(nsdf: Array<number>){
-    let idxOfPeak = null;
-    const peaks = new Array<number>();
+    let head = 0;
+    const peakIndexes = new Array<number>();
     const n = nsdf.length - 1;
     let i = 0;
     for (; i < n && nsdf[i] > 0; i++){
       // nop
     }
     for (; i < n; i++){
+      const pi = peakIndexes[head];
       if (nsdf[i] > 0){
-        if (idxOfPeak===null || nsdf[i]>nsdf[idxOfPeak]){
-          idxOfPeak = i;
+        if (pi === undefined || nsdf[i] > nsdf[pi]){
+          peakIndexes[head] = i;
         }
-      }else if (idxOfPeak !== null){
-        peaks.push(idxOfPeak);
-        idxOfPeak = null;
+      }else if (pi !== undefined){
+        head += 1;
       }
     }
-    if (idxOfPeak !== null) peaks.push(idxOfPeak);
 
-    return peaks;
+    return peakIndexes;
   }
 
   static pitch(ary: Array<number>, sampleRate: number){
@@ -76,14 +75,14 @@ class Pitcher{
 
     const nsdf = this.nsdf(x);
 
-    const peaks = this.peakPicking(nsdf);
-    if (peaks.length === 0) return -1.0;
+    const peakIndexes = this.peakPicking(nsdf);
+    if (peakIndexes.length === 0) return -1.0;
 
     const periods = new Array<number>();
     const amps = new Array<number>();
 
-    for (let i = 0; i < peaks.length; i++){
-      const h = this.parabola(nsdf, peaks[i]);
+    for (let i = 0; i < peakIndexes.length; i++){
+      const h = this.parabola(nsdf, peakIndexes[i]);
       amps.push(h.y);
       periods.push(h.x);
     }
