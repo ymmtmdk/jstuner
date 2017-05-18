@@ -67,7 +67,8 @@ function connectRecorder(stream) {
   const recorder = audioContext.createScriptProcessor(bufferSize, 2, 2);
   let counter = 0;
   recorder.onaudioprocess = function(e) {
-    if (counter++ % 2 == 0) {
+    const span = document.hasFocus() ? 2 : 16;
+    if (counter++ % span != 0) {
       return;
     }
     const left = e.inputBuffer.getChannelData(0);

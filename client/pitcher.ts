@@ -46,21 +46,24 @@ class Pitcher{
   }
 
   private static peakPicking(nsdf: Array<number>){
-    let maxI = 0;
-    let nega = false;
+    let idxOfPeak = null;
     const peaks = new Array<number>();
-    for (let i = 0; i < nsdf.length-1; i++){
-      if (nsdf[i] > 0.0){
-        if (nega && (maxI===0 || nsdf[i]>nsdf[maxI])) maxI = i;
-      }else{
-        if (maxI>0){
-          peaks.push(maxI);
-          maxI = 0;
+    const n = nsdf.length - 1;
+    let i = 0;
+    for (; i < n && nsdf[i] > 0; i++){
+      // nop
+    }
+    for (; i < n; i++){
+      if (nsdf[i] > 0){
+        if (idxOfPeak===null || nsdf[i]>nsdf[idxOfPeak]){
+          idxOfPeak = i;
         }
-        nega = true;
+      }else if (idxOfPeak !== null){
+        peaks.push(idxOfPeak);
+        idxOfPeak = null;
       }
     }
-    if (maxI>0) peaks.push(maxI);
+    if (idxOfPeak !== null) peaks.push(idxOfPeak);
 
     return peaks;
   }
