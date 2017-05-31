@@ -1,18 +1,24 @@
+const path = require('path');
+
 module.exports = {
   entry: "./client/main.ts",
   output: {
-    filename: "./public/bundle.js"
+    path: path.resolve(__dirname, 'public/assets'),
+    filename: "bundle.js"
   },
-  // Enable sourcemaps for debugging webpack's output.
-  devtool: "source-map",
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.js']
   },
   module: {
     loaders: [
-      // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
-      { test: /\.tsx?$/, loader: "ts-loader" }
+      { test: /\.ts$/, loader: "ts-loader" }
     ]
-  }
+  },
+  devtool: "source-map",
+  devServer: {
+    contentBase: path.resolve(__dirname, "public"),
+    publicPath: '/assets/',
+    watchContentBase: true
+  },
 };
 
