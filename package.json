@@ -6,7 +6,11 @@
     "build": "webpack",
     "server": "webpack-dev-server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "events": "^1.1.1",
+    "jquery": "^3.2.1",
+    "skyway-peerjs": "^0.4.0"
+  },
   "devDependencies": {
     "awesome-typescript-loader": "^3.2.1",
     "source-map-loader": "^0.2.1",

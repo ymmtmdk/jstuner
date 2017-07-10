@@ -26,7 +26,11 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, "public"),
     publicPath: '/assets/',
-    watchContentBase: true
+    watchContentBase: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
   },
 };
 
