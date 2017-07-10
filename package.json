@@ -1,6 +1,6 @@
 {
   "name": "jstuner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "scripts": {
     "build": "webpack",
@@ -8,9 +8,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "ts-loader": "^2.2.2",
+    "awesome-typescript-loader": "^3.2.1",
+    "source-map-loader": "^0.2.1",
     "typescript": "^2.4.1",
-    "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.5.0"
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.5.1"
   }
 }
