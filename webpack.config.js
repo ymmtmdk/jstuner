@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: "./client/main.ts",
+  entry: "./src/main.ts",
   output: {
     path: path.resolve(__dirname, 'public/assets'),
     filename: "bundle.js"
