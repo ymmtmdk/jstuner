@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "events": "^1.1.1",
-    "jquery": "^3.2.1",
-    "skyway-peerjs": "^0.4.0"
+    "jquery": "^3.2.1"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.2.1",

@@ -1,6 +1,5 @@
 import Note from './note';
 import Pitcher from './pitcher';
-import $ from 'jquery';
 
 let audioContext, canvas, canvasContext;
 audioContext = null;
