@@ -1,5 +1,4 @@
-import Note from './note';
-import Pitcher from './pitcher';
+import { Note, Pitcher } from 'pitch-detector';
 
 let audioContext, canvas, canvasContext;
 audioContext = null;

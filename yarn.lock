@@ -903,15 +903,11 @@ event-emitter@~0.3.5:
     d "1"
     es5-ext "~0.10.14"
 
-eventemitter3@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-0.1.5.tgz#fbb0655172b87911ba782bb7175409c801e5059f"
-
 eventemitter3@1.x.x:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
 
-events@^1.0.0, events@^1.1.1:
+events@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
@@ -1584,14 +1580,6 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-jquery@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
-
-js-binarypack@0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/js-binarypack/-/js-binarypack-0.0.9.tgz#454243d3de212961cc1514a2f119dec2faf64035"
-
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
@@ -2202,6 +2190,10 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
 
+pitch-detector@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/pitch-detector/-/pitch-detector-1.0.6.tgz#6686e39f4d286cd62c038925f6a0f6fd86664d0c"
+
 portfinder@^1.0.9:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.13.tgz#bb32ecd87c27104ae6ee44b5a3ccbf0ebb1aede9"
@@ -2358,12 +2350,6 @@ regex-not@^1.0.0:
   resolved "https://registry.yarnpkg.com/regex-not/-/regex-not-1.0.0.tgz#42f83e39771622df826b02af176525d6a5f157f9"
   dependencies:
     extend-shallow "^2.0.1"
-
-"reliable@git+https://github.com/michelle/reliable.git":
-  version "0.1.0"
-  resolved "git+https://github.com/michelle/reliable.git#f09ba29d57a05beaa07990171f3fe7b746587aaa"
-  dependencies:
-    js-binarypack "0.0.9"
 
 remove-trailing-separator@^1.0.1:
   version "1.0.1"
@@ -2546,14 +2532,6 @@ sha.js@^2.4.0, sha.js@^2.4.8:
 signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
-
-skyway-peerjs@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/skyway-peerjs/-/skyway-peerjs-0.4.0.tgz#60e07261c9eece80e68b7c1d15586d1681d13cf8"
-  dependencies:
-    eventemitter3 "0.1.5"
-    js-binarypack "0.0.9"
-    reliable "git+https://github.com/michelle/reliable.git"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
@@ -3055,6 +3033,10 @@ webpack-dev-server@^2.5.1:
     webpack-dev-middleware "^1.11.0"
     yargs "^6.0.0"
 
+webpack-library-starter-ymmt@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/webpack-library-starter-ymmt/-/webpack-library-starter-ymmt-0.3.0.tgz#0a0a1fe35339267d87fcb521523ccb9140ca21d2"
+
 webpack-sources@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.0.1.tgz#c7356436a4d13123be2e2426a05d1dad9cbe65cf"
@@ -3062,9 +3044,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.1.0.tgz#ac0675e500db835f9ab2369d29ba096f51ad0731"
+webpack@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.2.0.tgz#8b0cae0e1a9fd76bfbf0eab61a8c2ada848c312f"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"

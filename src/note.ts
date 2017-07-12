@@ -1,4 +1,4 @@
-class Note{
+export class Note{
   readonly hz: number;
   readonly base: number;
   readonly note: number;
@@ -20,5 +20,4 @@ class Note{
   }
 }
 
-export default Note;
 

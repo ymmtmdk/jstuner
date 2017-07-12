@@ -1,6 +1,6 @@
 import Complex from './complex';
 
-class Pitcher{
+export class Pitcher{
   private static parabola(nsdf: Array<number>, i:number){
     const a = nsdf[i-1];
     const b = nsdf[i];
@@ -123,6 +123,4 @@ class FFT{
     FFT.fft_inner(n, 1, false, x, new Array<Complex>());
   }
 }
-
-export default Pitcher;
 
