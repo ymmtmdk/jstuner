@@ -1,6 +1,5 @@
 import Note from './note';
 import Pitcher from './pitcher';
-import {Communicator} from './communicator';
 import $ from 'jquery';
 
 let audioContext, canvas, canvasContext;
@@ -88,7 +87,7 @@ function connectRecorder(stream) {
   return recorder.connect(audioContext.destination);
 };
 
-async function main(){
+function main(){
   const nav: any = navigator;
   const win: any = window;
 
@@ -109,23 +108,9 @@ async function main(){
   );
   canvas = document.getElementById("wave");
   canvasContext = canvas.getContext("2d");
-  const APIKEY = 'c86fbf19-fbee-4b25-80ea-02b27155ec51';
-
-  const communicator = new Communicator(APIKEY);
-  await communicator.prepare();
-  const list = await communicator.allPeers();
-  list.forEach(e=>{
-    console.log(e);
-    $("#peer").append(`<a class='peerLink' href='#'>${e}</a>`);
-  });
-
-  $("a.peerLink").click(e=>{
-    e.stopPropagation();
-    console.log(e.target.text);
-  });
 }
 
 window.onload = () => {
-  main().then()
+  main();
 };
 
