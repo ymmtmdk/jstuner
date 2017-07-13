@@ -6,8 +6,8 @@ class JsTuner{
   canvas;
   canvasContext;
 
-  constructor(){
-    this.canvas = document.getElementById("wave");
+  constructor(canvas){
+    this.canvas = canvas;
     this.canvasContext = this.canvas.getContext("2d");
     this.audioContext = new AudioContext();
   }
@@ -114,6 +114,6 @@ class JsTuner{
 }
 
 window.onload = () => {
-  (new JsTuner()).main();
+  (new JsTuner(document.getElementById("wave"))).main();
 };
 
