@@ -1,11 +1,15 @@
 {
   "name": "jstuner",
   "version": "0.0.4",
-  "license": "MIT",
+  "description": "guitar tuner UI",
+  "main": "dist/bundle.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "server": "webpack-dev-server"
   },
+  "author": "ymmtmdk",
+  "license": "MIT",
   "dependencies": {
     "pitch-detector": "^1.1.0",
     "webpack-library-starter-ymmt": "^0.3.0"
