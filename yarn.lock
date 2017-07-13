@@ -1589,6 +1589,13 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
+jstuner-ui@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/jstuner-ui/-/jstuner-ui-0.0.7.tgz#e1c18c0d75cc1679b1eb0550c164004c011814be"
+  dependencies:
+    pitch-detector "^1.1.0"
+    webpack-library-starter-ymmt "^0.3.0"
+
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"

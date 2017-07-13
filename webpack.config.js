@@ -1,16 +1,10 @@
 const path = require('path');
 
-const libraryName = 'bundle';
-const outputFile = libraryName + '.js';
-
 module.exports = {
-  entry: "./src/index.ts",
+  entry: "./src/main.ts",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: outputFile,
-    library: libraryName,
-    libraryTarget: 'umd',
-    umdNamedDefine: true
+    path: path.resolve(__dirname, 'public/assets'),
+    filename: "bundle.js"
   },
 
   devtool: "source-map",
