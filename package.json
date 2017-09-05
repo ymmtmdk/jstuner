@@ -1,10 +1,10 @@
 {
   "name": "jstuner",
-  "version": "0.0.6",
-  "license": "MIT",
+  "version": "0.0.7",
   "scripts": {
     "build": "webpack",
-    "server": "webpack-dev-server"
+    "server": "webpack-dev-server",
+    "gh-pages": "git subtree push --prefix public/ origin gh-pages"
   },
   "dependencies": {
     "jstuner-ui": "^0.1.4",
@@ -17,5 +17,12 @@
     "typescript": "^2.4.2",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.6.1"
-  }
+  },
+  "author": "ymmtmdk",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ymmtmdk/jstuner.git"
+  },
+  "homepage": "https://github.com/ymmtmdk/jstuner"
 }
